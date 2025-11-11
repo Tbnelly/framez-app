@@ -43,7 +43,7 @@ Framez is a social media-style mobile app built with **React Native** and **Expo
 
 1. Clone the repository:
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/Tbnelly/framez-app
    cd framez
 2. Install dependencies:
 
@@ -104,5 +104,5 @@ Framez is a social media-style mobile app built with **React Native** and **Expo
    Create a new post by navigating to Create Post screen.
 
    Log out using the Logout button in the Profile tab.
-   
+
 6. ScreenShot
