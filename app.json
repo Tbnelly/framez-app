@@ -47,9 +47,6 @@
     },
     "extra": {
       "router": {},
-      "eas": {
-        "projectId": "577567c2-3225-41df-a981-ccbd889c322f"
-      },
       "EXPO_PUBLIC_FIREBASE_API_KEY": "AIzaSyCQbV-Ju3s6b6QNhnoTHo8uo0Reh8zQq9M",
       "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN": "framez-7bee6.firebaseapp.com",
       "EXPO_PUBLIC_FIREBASE_PROJECT_ID": "framez-7bee6",
@@ -58,7 +55,10 @@
       "EXPO_PUBLIC_FIREBASE_APP_ID": "1:71506393699:web:e34a133b8aac82ce9c5656",
       "EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET": "Framez",
       "EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME": "djsirsymb",
-      "EXPO_PUBLIC_CLOUDINARY_API_URL": "https://api.cloudinary.com/v1_1/djsirsymb/image/upload"
+      "EXPO_PUBLIC_CLOUDINARY_API_URL": "https://api.cloudinary.com/v1_1/djsirsymb/image/upload",
+      "eas": {
+        "projectId": "a96a2e56-8ceb-4718-a9b1-3339b39e0a52"
+      }
     }
   }
 }
