@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "framez",
+    "name": "kimberlypacho",
     "slug": "framez",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -57,7 +57,7 @@
       "EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME": "djsirsymb",
       "EXPO_PUBLIC_CLOUDINARY_API_URL": "https://api.cloudinary.com/v1_1/djsirsymb/image/upload",
       "eas": {
-        "projectId": "a96a2e56-8ceb-4718-a9b1-3339b39e0a52"
+        "projectId": "02e3cf74-eed5-4f3d-8a63-fc3f9d4bcbd0"
       }
     }
   }
