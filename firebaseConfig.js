@@ -16,30 +16,12 @@ const getConfigValue = (key) => {
 };
 
 const firebaseConfig = {
-  apiKey: getConfigValue(
-    "EXPO_PUBLIC_FIREBASE_API_KEY",
-    "AIzaSyCQbV-Ju3s6b6QNhnoTHo8uo0Reh8zQq9M"
-  ),
-  authDomain: getConfigValue(
-    "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN",
-    "framez-7bee6.firebaseapp.com"
-  ),
-  projectId: getConfigValue(
-    "EXPO_PUBLIC_FIREBASE_PROJECT_ID",
-    "framez-7bee6"
-  ),
-  storageBucket: getConfigValue(
-    "EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET",
-    "framez-7bee6.appspot.com"
-  ),
-  messagingSenderId: getConfigValue(
-    "EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID",
-    "71506393699"
-  ),
-  appId: getConfigValue(
-    "EXPO_PUBLIC_FIREBASE_APP_ID",
-    "1:71506393699:web:e34a133b8aac82ce9c5656"
-  ),
+  apiKey: getConfigValue("EXPO_PUBLIC_FIREBASE_API_KEY"),
+  authDomain: getConfigValue("EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN"),
+  projectId: getConfigValue("EXPO_PUBLIC_FIREBASE_PROJECT_ID"),
+  storageBucket: getConfigValue("EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET"),
+  messagingSenderId: getConfigValue("EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID"),
+  appId: getConfigValue("EXPO_PUBLIC_FIREBASE_APP_ID"),
 };
 
 // Validate that we have required config values
