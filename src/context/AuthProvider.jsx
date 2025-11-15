@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { auth } from "../../firebaseConfig";
+import { auth, isFirebaseInitialized } from "../../firebaseConfig";
 import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
@@ -13,18 +13,46 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [initializing, setInitializing] = useState(true);
+  const [firebaseError, setFirebaseError] = useState(null);
 
-  // Track auth state
+  // Track auth state with error handling
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (u) => {
-      setUser(u);
-      if (initializing) setInitializing(false);
-    });
-    return unsubscribe;
+    // Check if Firebase is properly initialized
+    if (!auth || !isFirebaseInitialized()) {
+      console.error("Firebase not initialized properly");
+      setFirebaseError("Firebase initialization failed. Please check your configuration.");
+      setInitializing(false);
+      return;
+    }
+
+    try {
+      const unsubscribe = onAuthStateChanged(
+        auth,
+        (u) => {
+          setUser(u);
+          if (initializing) setInitializing(false);
+        },
+        (error) => {
+          // Handle auth state change errors
+          console.error("Auth state change error:", error);
+          setFirebaseError(error.message);
+          if (initializing) setInitializing(false);
+        }
+      );
+      return unsubscribe;
+    } catch (error) {
+      console.error("Error setting up auth listener:", error);
+      setFirebaseError(error.message);
+      setInitializing(false);
+    }
   }, []);
 
-  // Sign up and auto-login
+  // Sign up and auto-login with error handling
   const signUp = async ({ name, email, password }) => {
+    if (!auth || !isFirebaseInitialized()) {
+      throw new Error("Firebase is not initialized. Cannot sign up.");
+    }
+
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(cred.user, { displayName: name });
@@ -36,8 +64,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Sign in existing user
+  // Sign in existing user with error handling
   const signIn = async ({ email, password }) => {
+    if (!auth || !isFirebaseInitialized()) {
+      throw new Error("Firebase is not initialized. Cannot sign in.");
+    }
+
     try {
       const cred = await signInWithEmailAndPassword(auth, email, password);
       setUser(cred.user);
@@ -48,14 +80,36 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Log out
+  // Log out with error handling
   const logout = async () => {
-    await signOut(auth);
-    setUser(null);
+    if (!auth || !isFirebaseInitialized()) {
+      console.warn("Firebase not initialized, clearing user state only");
+      setUser(null);
+      return;
+    }
+
+    try {
+      await signOut(auth);
+      setUser(null);
+    } catch (err) {
+      console.log("Logout Error:", err);
+      // Still clear user state even if signOut fails
+      setUser(null);
+      throw err;
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, initializing, signUp, signIn, logout }}>
+    <AuthContext.Provider 
+      value={{ 
+        user, 
+        initializing, 
+        signUp, 
+        signIn, 
+        logout,
+        firebaseError // expose error state for debugging
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

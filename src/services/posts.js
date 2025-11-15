@@ -1,18 +1,32 @@
 // src/services/posts.js
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
+import Constants from 'expo-constants';
 
-// Cloudinary info
+// Helper to get config with fallback (same pattern as firebaseConfig.js)
+const getConfigValue = (key, fallback) => {
+  return Constants.expoConfig?.extra?.[key] || fallback || "";
+};
 
-const UPLOAD_PRESET = process.env.EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
-const CLOUDINARY_URL = process.env.EXPO_PUBLIC_CLOUDINARY_API_URL;
+const UPLOAD_PRESET = getConfigValue(
+  "EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET",
+  "Framez"
+);
 
+const CLOUDINARY_URL = getConfigValue(
+  "EXPO_PUBLIC_CLOUDINARY_API_URL",
+  "https://api.cloudinary.com/v1_1/djsirsymb/image/upload"
+);
 
 async function uploadImageToCloudinary(uri) {
+  if (!UPLOAD_PRESET || !CLOUDINARY_URL) {
+    throw new Error('Cloudinary is not configured properly');
+  }
+
   const formData = new FormData();
   formData.append('file', {
     uri,
-    type: 'image/jpeg', // you can adjust based on actual type
+    type: 'image/jpeg',
     name: `${Date.now()}.jpg`,
   });
   formData.append('upload_preset', UPLOAD_PRESET);
